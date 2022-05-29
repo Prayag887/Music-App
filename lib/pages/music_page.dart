@@ -52,32 +52,32 @@ class _MusicPageState extends State<MusicPage> {
     ],
   ];
 
-  final List musicName = [
-    [
-      'Crushed',
-      true,
-    ],
-    [
-      'Nothing Else Matters',
-      false,
-    ],
-    [
-      'Synthwave',
-      false,
-    ],
-    [
-      'Thunderstruck',
-      false,
-    ],
-    [
-      'Im not afraid',
-      false,
-    ],
-    [
-      'Maybe',
-      false,
-    ],
-  ];
+  // final List musicName = [
+  //   [
+  //     'Crushed',
+  //     true,
+  //   ],
+  //   [
+  //     'Nothing Else Matters',
+  //     false,
+  //   ],
+  //   [
+  //     'Synthwave',
+  //     false,
+  //   ],
+  //   [
+  //     'Thunderstruck',
+  //     false,
+  //   ],
+  //   [
+  //     'Im not afraid',
+  //     false,
+  //   ],
+  //   [
+  //     'Maybe',
+  //     false,
+  //   ],
+  // ];
 
   //automatickeepalive function uses garera active index banauna milxa
 
@@ -93,16 +93,16 @@ class _MusicPageState extends State<MusicPage> {
   }
 
 //for the music listed below new music tile
-  void musicNameSelected(int index) {
-    setState(() {
-      //sabai option lai false banaako
-      for (int i = 0; i < musicName.length; i++) {
-        musicName[i][1] = false;
-      }
-      //maathi ko false vaisakepaxi aba naya choose grda esle true banauxa
-      musicName[index][1] = true;
-    });
-  }
+  // void musicNameSelected(int index) {
+  //   setState(() {
+  //     //sabai option lai false banaako
+  //     for (int i = 0; i < musicName.length; i++) {
+  //       musicName[i][1] = false;
+  //     }
+  //     //maathi ko false vaisakepaxi aba naya choose grda esle true banauxa
+  //     musicName[index][1] = true;
+  //   });
+  // }
 
   //bottomnavigation bar lai tap grna milne banaako
   late int _selectedIndexForNavbar = 0;
@@ -121,148 +121,142 @@ class _MusicPageState extends State<MusicPage> {
         child: Padding(
           padding: EdgeInsets.only(top: 55, left: 20, right: 20),
           child: Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AppLargeText(text: "Hello There !", color: Color(0xffdcdde1)),
-                AppText(
-                  text: "What do you want to hear today?",
-                  color: Color(0xff4b506c),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 20, bottom: 40),
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              AppLargeText(text: "Hello There !", color: Color(0xffdcdde1)),
+              AppText(
+                text: "What do you want to hear today?",
+                color: Color(0xff4b506c),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 20, bottom: 40),
 
-                  // text field search bar jasari use gareko
+                // text field search bar jasari use gareko
 
-                  child: TextField(
-                    style: TextStyle(color: Color(0xffdcdde1)),
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      fillColor: Color(0xff212350),
-                      hintText: "Search",
-                      hintStyle:
-                          TextStyle(fontSize: 20.0, color: Color(0xff4b506c)),
-                      filled: true,
-                      prefixIcon: const Icon(
-                        Icons.search,
-                        color: Color(0xffdcdde1),
-                      ),
-                      suffixIcon: Icon(
-                        Icons.music_note,
-                        color: Color(0xffdcdde1),
-                      ),
+                child: TextField(
+                  style: TextStyle(color: Color(0xffdcdde1)),
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    fillColor: Color(0xff212350),
+                    hintText: "Search",
+                    hintStyle:
+                        TextStyle(fontSize: 20.0, color: Color(0xff4b506c)),
+                    filled: true,
+                    prefixIcon: const Icon(
+                      Icons.search,
+                      color: Color(0xffdcdde1),
+                    ),
+                    suffixIcon: Icon(
+                      Icons.music_note,
+                      color: Color(0xffdcdde1),
                     ),
                   ),
                 ),
+              ),
 
-                ///navbar below the textfield alternative (tabbar)
-                SizedBox(
-                  height: 35,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: musicType.length,
-                      itemBuilder: (context, index) {
-                        return MusicType(
-                          musictype: musicType[index][0],
-                          isSelect: musicType[index][1],
-                          onTap: () {
-                            musicTypeSelected(index);
-                          },
-                        );
-                      }),
+              ///navbar below the textfield alternative (tabbar)
+              SizedBox(
+                height: 35,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: musicType.length,
+                    itemBuilder: (context, index) {
+                      return MusicType(
+                        musictype: musicType[index][0],
+                        isSelect: musicType[index][1],
+                        onTap: () {
+                          musicTypeSelected(index);
+                        },
+                      );
+                    }),
+              ),
+
+              // Music Tiles that scrolls horizontally
+              Container(
+                height: 400,
+                width: 400,
+                child: ListView(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  children: <Widget>[
+                    MusicTile(
+                      musicImagePath: 'lib/images/cover.png',
+                      musicName: 'Podcast',
+                      musicGenre: 'Synthwave',
+                      musicPrice: '',
+                    ),
+                    MusicTile(
+                      musicImagePath: 'lib/images/music.png',
+                      musicName: 'asd',
+                      musicGenre: 'Pop',
+                      musicPrice: 'Rs 150',
+                    ),
+                    MusicTile(
+                      musicImagePath: 'lib/images/metal.png',
+                      musicName: 'asdasd',
+                      musicGenre: 'Rock',
+                      musicPrice: 'Rs 150',
+                    ),
+                    MusicTile(
+                      musicImagePath: 'lib/images/turtle_back.png',
+                      musicName: 'asdas',
+                      musicGenre: 'Ballad',
+                      musicPrice: 'Rs 150',
+                    ),
+                    MusicTile(
+                      musicImagePath: 'lib/images/planet.png',
+                      musicName: 'asdas',
+                      musicGenre: 'Ballad',
+                      musicPrice: 'Rs 150',
+                    ),
+                  ],
                 ),
 
-                // Music Tiles that scrolls horizontally
-                Container(
-                  height: 400,
-                  width: 400,
-                  child: ListView(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    children: <Widget>[
-                      MusicTile(
-                        musicImagePath: 'lib/images/cover.png',
-                        musicName: 'Podcast',
-                        musicGenre: 'Synthwave',
-                        musicPrice: '',
+                // CustomButton(onPressed: () { },)
+              ),
+
+              Container(
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 40),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Your Songs',
+                        style: GoogleFonts.poppins(
+                          fontSize: 20,
+                          color: Color(0xffdcdde1),
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
-                      MusicTile(
-                        musicImagePath: 'lib/images/music.png',
-                        musicName: 'asd',
-                        musicGenre: 'Pop',
-                        musicPrice: 'Rs 150',
-                      ),
-                      MusicTile(
-                        musicImagePath: 'lib/images/metal.png',
-                        musicName: 'asdasd',
-                        musicGenre: 'Rock',
-                        musicPrice: 'Rs 150',
-                      ),
-                      MusicTile(
-                        musicImagePath: 'lib/images/turtle_back.png',
-                        musicName: 'asdas',
-                        musicGenre: 'Ballad',
-                        musicPrice: 'Rs 150',
-                      ),
-                      MusicTile(
-                        musicImagePath: 'lib/images/planet.png',
-                        musicName: 'asdas',
-                        musicGenre: 'Ballad',
-                        musicPrice: 'Rs 150',
+                      Text(
+                        'See All',
+                        style: GoogleFonts.poppins(
+                          fontSize: 15,
+                          color: Color(0xffdcdde1),
+                          fontWeight: FontWeight.w300,
+                        ),
                       ),
                     ],
                   ),
-
-                  // CustomButton(onPressed: () { },)
                 ),
+              ),
 
-                Container(
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 40),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Your Songs',
-                          style: GoogleFonts.poppins(
-                            fontSize: 20,
-                            color: Color(0xffdcdde1),
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                        Text(
-                          'See All',
-                          style: GoogleFonts.poppins(
-                            fontSize: 15,
-                            color: Color(0xffdcdde1),
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
-                      ],
-                    ),
+              Container(
+                height: 535,
+                child: ListView.builder(
+                  itemBuilder: (context, index) => MusicNameTile(
+                    musicName: 'musicName $index',
+                    musicImagePath: 'lib/images/cover.png',
+                    musicArtist: 'by musicArtist $index',
+                    musicDuration: '00:00',
                   ),
+                  itemCount: 100,
                 ),
-
-                Container(
-                  height: 535,
-                  child: ListView.builder(
-                      shrinkWrap: true,
-                      // scrollDirection: Axis.vertical,
-                      itemCount: musicName.length,
-                      itemBuilder: (context, index) {
-                        return MusicNameTile(
-                          musicName: musicName[index][0],
-                          isSelect: musicName[index][1],
-                          onTap: () {
-                            musicNameSelected(index);
-                          },
-                        );
-                      }),
-                ),
-              ],
-            ),
+              ),
+            ]),
           ),
         ),
       ),
