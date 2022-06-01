@@ -138,78 +138,79 @@ class _MusicNameTileState extends State<MusicNameTile> {
                           ),
                         ),
                       ),
-                      // Padding(
-                      //   padding: EdgeInsets.only(top: 0, left: 20),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //     children: [
-                      //       Text(
-                      //         '\n${_duration.toString().split(".")[0]}',
-                      //         style: GoogleFonts.poppins(
-                      //           fontSize: 10,
-                      //           letterSpacing: 1,
-                      //           color: Color(0xffdcdde1),
-                      //         ),
-                      //       ),
-                      // Padding(
-                      //   padding: EdgeInsets.only(left: 70),
-                      //   child: SizedBox(
-                      //     child: ElevatedButton(
-                      //       style: ButtonStyle(
-                      //         minimumSize:
-                      //             MaterialStateProperty.all(Size(50, 50)),
-                      //         backgroundColor: MaterialStateProperty.all(
-                      //             Colors.transparent),
-                      //         shadowColor: MaterialStateProperty.all(
-                      //             Colors.transparent),
-                      //         shape:
-                      //             MaterialStateProperty.all<CircleBorder>(
-                      //           CircleBorder(),
-                      //         ),
-                      //       ),
-                      //       onPressed: () {
-                      //         setState(() {
-                      //           if (isPlaying) {
-                      //             widget.audioPlayer.pause();
-                      //           } else {
-                      //             widget.audioPlayer.play();
-                      //           }
-                      //           isPlaying = !isPlaying;
-                      //         });
-                      //       },
-                      //       child: SizedBox(
-                      //         child: Ink(
-                      //           decoration: BoxDecoration(
-                      //             gradient: LinearGradient(
-                      //               colors: [
-                      //                 Color.fromARGB(255, 104, 2, 207),
-                      //                 Color.fromARGB(255, 209, 97, 254)
-                      //               ],
-                      //               begin: Alignment.topLeft,
-                      //               end: Alignment.bottomRight,
-                      //             ),
-                      //             shape: BoxShape.circle,
-                      //           ),
-                      //           child: Container(
-                      //             //create a constraint so that the color gradient covers the whole button
-                      //             constraints: BoxConstraints(
-                      //               minWidth: 30,
-                      //               minHeight: 30,
-                      //             ),
-                      //             alignment: Alignment.center,
-                      //             child: Icon(
-                      //               isPlaying
-                      //                   ? Icons.pause_rounded
-                      //                   : Icons.play_arrow_rounded,
-                      //             ),
-                      //           ),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
-                      // ],
-                      // ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 0, left: 20),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '\n${_duration.toString().split(".")[0]}',
+                              style: GoogleFonts.poppins(
+                                fontSize: 10,
+                                letterSpacing: 1,
+                                color: Color(0xffdcdde1),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 70),
+                              child: SizedBox(
+                                child: ElevatedButton(
+                                  style: ButtonStyle(
+                                    minimumSize:
+                                        MaterialStateProperty.all(Size(50, 50)),
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.transparent),
+                                    shadowColor: MaterialStateProperty.all(
+                                        Colors.transparent),
+                                    shape:
+                                        MaterialStateProperty.all<CircleBorder>(
+                                      CircleBorder(),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      if (isPlaying) {
+                                        widget.audioPlayer.pause();
+                                      } else {
+                                        widget.audioPlayer.play();
+                                      }
+                                      isPlaying = !isPlaying;
+                                    });
+                                  },
+                                  child: SizedBox(
+                                    child: Ink(
+                                      decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            Color.fromARGB(255, 104, 2, 207),
+                                            Color.fromARGB(255, 209, 97, 254)
+                                          ],
+                                          begin: Alignment.topLeft,
+                                          end: Alignment.bottomRight,
+                                        ),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Container(
+                                        //create a constraint so that the color gradient covers the whole button
+                                        constraints: BoxConstraints(
+                                          minWidth: 30,
+                                          minHeight: 30,
+                                        ),
+                                        alignment: Alignment.center,
+                                        child: Icon(
+                                          isPlaying
+                                              ? Icons.pause_rounded
+                                              : Icons.play_arrow_rounded,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
