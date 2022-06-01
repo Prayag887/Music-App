@@ -2,14 +2,20 @@
 
 // import 'dart:html';
 
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:music_app/pages/home_screen/app_large_text.dart';
 import 'package:music_app/pages/home_screen/app_text.dart';
 import 'package:music_app/pages/home_screen/music_tile.dart';
 import 'package:music_app/pages/home_screen/music_type.dart';
 import 'package:music_app/pages/home_screen/music_play_tile.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:music_app/pages/musicPlayScreen/musicPlayScreen.dart';
+import 'package:on_audio_query/on_audio_query.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class MusicPage extends StatefulWidget {
   const MusicPage({Key? key}) : super(key: key);
@@ -19,6 +25,15 @@ class MusicPage extends StatefulWidget {
 }
 
 class _MusicPageState extends State<MusicPage> {
+  void initState() {
+    super.initState();
+    requestPermission();
+  }
+
+  void requestPermission() {
+    Permission.storage.request();
+  }
+
   List songsCover = [
     "Metallica.jpg",
     "Beatles.jpg",
@@ -26,58 +41,13 @@ class _MusicPageState extends State<MusicPage> {
   ];
 
   final List musicType = [
-    [
-      'Recommendation',
-      true,
-    ],
-    [
-      'Trending',
-      false,
-    ],
-    [
-      'Synthwave',
-      false,
-    ],
-    [
-      'Metal',
-      false,
-    ],
-    [
-      'Rock',
-      false,
-    ],
-    [
-      'Pop',
-      false,
-    ],
+    ['Recommendation', true],
+    ['Trending', false],
+    ['Synthwave', false],
+    ['Metal', false],
+    ['Rock', false],
+    ['Pop', false]
   ];
-
-  // final List musicName = [
-  //   [
-  //     'Crushed',
-  //     true,
-  //   ],
-  //   [
-  //     'Nothing Else Matters',
-  //     false,
-  //   ],
-  //   [
-  //     'Synthwave',
-  //     false,
-  //   ],
-  //   [
-  //     'Thunderstruck',
-  //     false,
-  //   ],
-  //   [
-  //     'Im not afraid',
-  //     false,
-  //   ],
-  //   [
-  //     'Maybe',
-  //     false,
-  //   ],
-  // ];
 
   //automatickeepalive function uses garera active index banauna milxa
 
@@ -92,18 +62,6 @@ class _MusicPageState extends State<MusicPage> {
     });
   }
 
-//for the music listed below new music tile
-  // void musicNameSelected(int index) {
-  //   setState(() {
-  //     //sabai option lai false banaako
-  //     for (int i = 0; i < musicName.length; i++) {
-  //       musicName[i][1] = false;
-  //     }
-  //     //maathi ko false vaisakepaxi aba naya choose grda esle true banauxa
-  //     musicName[index][1] = true;
-  //   });
-  // }
-
   //bottomnavigation bar lai tap grna milne banaako
   late int _selectedIndexForNavbar = 0;
   void _onItemTapped(int index) {
@@ -113,6 +71,17 @@ class _MusicPageState extends State<MusicPage> {
   }
 
   @override
+  final _audioQuery = new OnAudioQuery();
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  playSong(String? uri) {
+    try {
+      _audioPlayer.setAudioSource(AudioSource.uri(Uri.parse(uri!)));
+      _audioPlayer.play();
+    } on Exception {
+      log("Error Parsing Song");
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xff1d1f3e),
@@ -246,14 +215,54 @@ class _MusicPageState extends State<MusicPage> {
 
               Container(
                 height: 535,
-                child: ListView.builder(
-                  itemBuilder: (context, index) => MusicNameTile(
-                    musicName: 'musicName $index',
-                    musicImagePath: 'lib/images/cover.png',
-                    musicArtist: 'by musicArtist $index',
-                    musicDuration: '00:00',
+                child: FutureBuilder<List<SongModel>>(
+                  future: _audioQuery.querySongs(
+                    sortType: null,
+                    orderType: OrderType.ASC_OR_SMALLER,
+                    uriType: UriType.EXTERNAL,
+                    ignoreCase: true,
                   ),
-                  itemCount: 100,
+                  builder: (context, item) {
+                    if (item.data == null) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+
+                    if (item.data!.isEmpty) {
+                      return Center(
+                        child: Text(
+                          "No Song Found",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      );
+                    }
+                    return ListView.builder(
+                      itemBuilder: (context, index) => MusicNameTile(
+                        // musicName:
+                        //     // ignore: unnecessary_string_interpolations
+                        //     item.data![index].displayNameWOExt,
+                        musicImagePath: 'lib/images/cover.png',
+                        // musicArtist: item.data![index].artist.toString(),
+                        // musicDuration: item.data![index].duration,
+                        songModel: item.data![index],
+                        audioPlayer: _audioPlayer,
+                        onTap: () {
+                          // playSong(item.data![index].uri);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => musicPlayScreen(
+                                songModel: item.data![index],
+                                audioPlayer: _audioPlayer,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      itemCount: item.data!.length,
+                    );
+                  },
                 ),
               ),
             ]),

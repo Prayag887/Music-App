@@ -31,7 +31,7 @@ class MusicType extends StatelessWidget {
                 textAlign: TextAlign.left,
                 style: GoogleFonts.poppins(
                   height: 1,
-                  fontSize: 18,
+                  fontSize: 13,
                   letterSpacing: 1,
                   fontWeight: FontWeight.bold,
                   color: isSelect ? Color(0xffdcdde2) : Color(0xff686d87),
