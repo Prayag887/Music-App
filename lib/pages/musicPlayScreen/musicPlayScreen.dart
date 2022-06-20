@@ -4,7 +4,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:music_app/pages/home_screen/music_tile.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class musicPlayScreen extends StatefulWidget {
@@ -33,7 +33,17 @@ class _musicPlayScreenState extends State<musicPlayScreen> {
   void playSong() {
     try {
       widget.audioPlayer.setAudioSource(
-        AudioSource.uri(Uri.parse(widget.songModel.uri!)),
+        AudioSource.uri(
+          Uri.parse(widget.songModel.uri!),
+          tag: MediaItem(
+            // Specify a unique ID for each media item:
+            id: '${widget.songModel.id}',
+            // Metadata to display in the notification:
+            album: "${widget.songModel.album}",
+            title: widget.songModel.displayNameWOExt,
+            artUri: Uri.parse('https://example.com/albumart.jpg'),
+          ),
+        ),
       );
       widget.audioPlayer.play();
       isPlaying = true;
@@ -117,7 +127,19 @@ class _musicPlayScreenState extends State<musicPlayScreen> {
                           ),
                         ),
                         Expanded(
-                            child: Slider(value: 0.0, onChanged: (value) {})),
+                          child: Slider(
+                              min: Duration(microseconds: 0)
+                                  .inSeconds
+                                  .toDouble(),
+                              value: _position.inSeconds.toDouble(),
+                              max: _duration.inSeconds.toDouble(),
+                              onChanged: (value) {
+                                setState(() {
+                                  changeToSeconds(value.toInt());
+                                  value = value;
+                                });
+                              }),
+                        ),
                         Text(
                           _duration.toString().split(".")[0],
                           style: TextStyle(
@@ -231,5 +253,10 @@ class _musicPlayScreenState extends State<musicPlayScreen> {
     );
     //   ),
     // );
+  }
+
+  void changeToSeconds(int seconds) {
+    Duration duration = Duration(seconds: seconds);
+    widget.audioPlayer.seek(duration);
   }
 }

@@ -8,19 +8,19 @@ import 'package:just_audio/just_audio.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class MusicNameTile extends StatefulWidget {
-  // final String musicName;
+  final String musicName;
   final String musicImagePath;
-  // final String musicArtist;
-  // final int? musicDuration;
+  final String musicArtist;
+  final int? musicDuration;
   final AudioPlayer audioPlayer;
   final VoidCallback onTap;
   final SongModel songModel;
 
   MusicNameTile({
-    // required this.musicName,
+    required this.musicName,
     required this.musicImagePath,
-    // required this.musicArtist,
-    // required this.musicDuration,
+    required this.musicArtist,
+    required this.musicDuration,
     // required this.isSelect,
     required this.onTap,
     required this.audioPlayer,
@@ -33,7 +33,7 @@ class MusicNameTile extends StatefulWidget {
 
 class _MusicNameTileState extends State<MusicNameTile> {
   Duration _duration = const Duration();
-  Duration _position = const Duration();
+
   bool isPlaying = false;
   @override
   void initState() {
@@ -72,7 +72,7 @@ class _MusicNameTileState extends State<MusicNameTile> {
         child: Container(
             // padding: EdgeInsets.only(right: 10, left: 10, bottom: 10),
             width: double.infinity,
-            height: 80,
+            height: 130,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
               color: Colors.black45,
@@ -108,7 +108,7 @@ class _MusicNameTileState extends State<MusicNameTile> {
                         padding: EdgeInsets.only(left: 5, top: 5, right: 5),
                         child: Container(
                           width: 250,
-                          height: 30,
+                          height: 35,
                           child: Text(
                             widget.songModel.displayNameWOExt,
                             maxLines: 3,

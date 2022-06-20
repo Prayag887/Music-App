@@ -73,6 +73,7 @@ class _MusicPageState extends State<MusicPage> {
   @override
   final _audioQuery = new OnAudioQuery();
   final AudioPlayer _audioPlayer = AudioPlayer();
+
   playSong(String? uri) {
     try {
       _audioPlayer.setAudioSource(AudioSource.uri(Uri.parse(uri!)));
@@ -241,14 +242,14 @@ class _MusicPageState extends State<MusicPage> {
                       itemBuilder: (context, index) => MusicNameTile(
                         // musicName:
                         //     // ignore: unnecessary_string_interpolations
-                        //     item.data![index].displayNameWOExt,
+                        musicName: item.data![index].displayNameWOExt,
                         musicImagePath: 'lib/images/cover.png',
-                        // musicArtist: item.data![index].artist.toString(),
-                        // musicDuration: item.data![index].duration,
+                        musicArtist: item.data![index].artist.toString(),
+                        musicDuration: item.data![index].duration,
                         songModel: item.data![index],
                         audioPlayer: _audioPlayer,
                         onTap: () {
-                          // playSong(item.data![index].uri);
+                          playSong(item.data![index].uri);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
